@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="static/styles/main.css" rel="stylesheet">
+  </head>
+  <body>
+    <ul>
+      {% for holding in holdings %}
+      <li>{{ holding.name }} ({{ holding.asset }}): {{ holding.shares }}</li>
+      {% endfor %}
+    </ul>
+  </body>
+  <a href="/">Home</a>
+</html>
+

@@ -1,0 +1,25 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="static/styles/main.css" rel="stylesheet">
+  </head>
+  <script src="static/scripts/submit_prices.js"></script>
+  <body>
+    <form id="prices_form" action="TODO" method="post">
+      {% for asset in assets %}
+      <div class=box_div>
+        <label for="{{ asset }}">{{ asset }}</label>
+        <input type="text" id="{{ asset }}" name="{{ asset }}" />
+      </div>
+      {% endfor %}
+    </form>
+    <button onclick="submit_prices()">submit</button>
+  </body>
+  <a href="/">Home</a>
+</html>
+

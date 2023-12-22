@@ -1,0 +1,20 @@
+
+body {
+  background-color: #558;
+}
+
+
+.box_div {
+  padding: 5px;
+  border: solid black 1px;
+  border-radius: 10px;
+}
+
+.box_div input {
+  float: right;
+}
+
+.snapshot {
+  border: solid black 1px;
+  border-radius: 3px;
+}

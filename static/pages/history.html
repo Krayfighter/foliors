@@ -1,0 +1,46 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="static/styles/main.css" rel="stylesheet">
+  </head>
+  <style>
+    #json_out table {
+      border: solid black 1px;
+      border-radius: 5px;
+      margin: 10px;
+    }
+
+    #json_out th {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    #json_out td {
+      text-align: left;
+      border-right: solid black 1px;
+    }
+
+    #json_out h3 {
+      margin-left: 5px;
+    }
+
+    #json_out span {
+      margin-left: 5px;
+    }
+  </style>
+  <script src="/static/scripts/fetch_history.js"></script>
+  <body onload=write_to_dom()>
+    
+    <div class="snapshot">
+      <div id="json_out"></div>
+    </div>
+
+    <a href="/">Home</a>
+  </body>
+</html>
+
