@@ -7,10 +7,10 @@ use rocket::fs::relative;
 
 use rocket_dyn_templates::{Template, context};
 
-mod util;
+pub mod util;
 use util::*;
 
-mod holdings;
+pub mod holdings;
 use holdings::*;
 
 mod dataroutes;
@@ -63,10 +63,6 @@ async fn chart() -> rocket::fs::NamedFile {
 async fn main() -> Result<(), rocket::Error> {
     
     let _ = rocket::build()
-//        .attach(Template::custom(|engines| {
-//            engines.tera.autoescape_on(vec![]);
-//            engines.tera.
-//        }))
         .attach(Template::fairing())
         .mount("/static", rocket::fs::FileServer::from(relative!("static")))
         .mount("/", routes![

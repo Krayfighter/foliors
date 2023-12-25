@@ -17,7 +17,7 @@ pub fn create_history_plot(
         (1024, 256)
     ).into_drawing_area();
 
-    root.fill(&plotters::style::colors::WHITE).unwrap();
+    root.fill(&plotters::style::colors::TRANSPARENT).unwrap();
 
     let history = history.window(window.clone());
 
@@ -32,7 +32,7 @@ pub fn create_history_plot(
         )?;
 
     chart.configure_mesh()
-        .x_labels(history.len())
+        .x_labels(time_markers as usize)
         .max_light_lines(4)
         .y_desc("Net Value")
         .draw()?;
@@ -44,8 +44,8 @@ pub fn create_history_plot(
                 let y: f64 = record.net_value();
                 return (x, y);
             }),
-            plotters::style::colors::BLACK,
-        ).point_size(5),
+            plotters::style::colors::WHITE,
+        ),
     )?;
 
     chart.draw_series(
@@ -53,7 +53,7 @@ pub fn create_history_plot(
             return plotters::element::Circle::new(
                 (record.time, record.net_value()),
                 3,
-                &plotters::style::colors::BLACK,
+                &plotters::style::colors::GREEN,
             );
         })
     )?;

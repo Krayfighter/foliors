@@ -53,15 +53,11 @@ pub async fn register_prices(json_prices: String) -> rocket::response::Redirect 
     #[derive(serde::Deserialize)]
     struct Prices (pub Vec<(holding::Asset, f64)>);
 
-    let mut prices: HashMap<holding::Asset, f64> = HashMap::new();
-
-    serde_json::from_str::<Prices>(&json_prices)
+    let prices = serde_json::from_str::<Prices>(&json_prices)
         .unwrap()
         .0
         .into_iter()
-        .for_each(|(asset, price)| {
-            prices.insert(asset, price);
-        });
+        .collect::<HashMap<holding::Asset, f64>>();
 
     let record = holding::Record::new(
         read_holdings().await.unwrap(),
@@ -71,7 +67,7 @@ pub async fn register_prices(json_prices: String) -> rocket::response::Redirect 
     let _ = rocket::tokio::task::spawn_blocking(move || {
         let mut history = holding::Records::from_file(HISTORY).unwrap();
         history.push(record);
-        history.to_file(HISTORY);
+        history.to_file(HISTORY).unwrap();
     }).await.unwrap();
 
     return rocket::response::Redirect::to(uri!("/history"))

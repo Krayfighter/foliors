@@ -1,6 +1,10 @@
 
 use serde::{Serialize, Deserialize};
-// #[macro_use] extern crate chrono;
+
+pub enum Provider {
+    None,
+    Coingecko,
+}
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 pub enum Asset {
@@ -11,11 +15,12 @@ pub enum Asset {
 }
 
 impl Asset {
-    pub fn from_str(string: &str) -> Option<Self> {
-        return ron::de::from_str(string).ok();
-    }
-    pub fn to_string(self) -> Option<String> {
-        return ron::ser::to_string(&self).ok();
+    pub fn get_provider(&self) -> Provider {
+        use Asset::*;
+        return match self {
+            XMR | ETH | BTC => Provider::Coingecko,
+            USD => Provider::None,
+        };
     }
 }
 
@@ -39,7 +44,7 @@ impl Holding {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
-pub struct Holdings (Vec<Holding>);
+pub struct Holdings (pub Vec<Holding>);
 
 impl Holdings {
     pub fn from_file <
@@ -48,14 +53,10 @@ impl Holdings {
         return crate::util::read_from_ron_file(fpath);
     }
 
-    pub fn _write_to_file <
+    pub fn to_file <
         P: AsRef<std::path::Path>
     > (&self, fpath: P) -> () {
         return crate::util::_write_to_ron_file(fpath, self);
-    }
-
-    pub fn _add(&mut self, item: Holding) {
-        self.0.push(item);
     }
 
     pub fn enumerate_assets(&self) -> Vec<Asset> {
@@ -67,10 +68,6 @@ impl Holdings {
             .iter()
             .map(|asset| asset.clone())
             .collect::<Vec<Asset>>();
-    }
-
-    pub fn _to_vec(self) -> Vec<Holding> {
-        return self.0;
     }
 }
 
