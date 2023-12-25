@@ -3,3 +3,6 @@
 *.ron
 *.png
 *.svg
+
+.env
+
